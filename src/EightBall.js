@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import './EightBall.css'
+import './EightBall.css';
 
+/** Array of stock eightball messages: {msg, color} */
 
-const DEFAULT_ANSWERS = [
+const STOCK_ANSWERS = [
   { msg: "It is certain.", color: "green" },
   { msg: "It is decidedly so.", color: "green" },
   { msg: "Without a doubt.", color: "green" },
@@ -23,25 +24,35 @@ const DEFAULT_ANSWERS = [
   { msg: "My sources say no.", color: "red" },
   { msg: "Outlook not so good.", color: "red" },
   { msg: "Very doubtful.", color: "red" },
-]
+];
 
-function getRandom(answers){
-  let index = Math.floor(Math.random() * answers.length)
+/** Helper function: accepts array of message objects,
+ *  returns random selection */
+
+function getRandom(answers) {
+  let index = Math.floor(Math.random() * answers.length);
 
   return answers[index];
 }
 
-/**  */
+/** Eightball generator
+ *
+ * Props:
+ * - answers (array of objects w/ msg and color keys)
+ *
+ * State:
+ * - message: "Think of a Question"/answer.msg
+ * - color: black/answer.color
+*/
+//TODO: use examples
 
-function EightBall( {answers=DEFAULT_ANSWERS} ) {
-
+function EightBall({ answers = STOCK_ANSWERS }) {
   const [message, setMessage] = useState("Think of a Question");
   const [color, setColor] = useState("black");
+  //TODO: combine states into answer
 
-  function handleClick(){
+  function handleClick() {
     let chosenMessage = getRandom(answers);
-    console.log('****chosenMessage msg=', chosenMessage.msg)
-    console.log('****chosenMessage color=', chosenMessage.color)
 
     setMessage(chosenMessage.msg);
     setColor(chosenMessage.color);
@@ -49,11 +60,11 @@ function EightBall( {answers=DEFAULT_ANSWERS} ) {
 
   return (
     <div className='EightBall'
-    style={{backgroundColor: color}}
-    onClick={handleClick} >
-    <p>{message}</p>
+      style={{ backgroundColor: color }}
+      onClick={handleClick} >
+      <p className='EightBall-message'>{message}</p>
     </div>
-  )
+  );
 }
 
 export default EightBall;
